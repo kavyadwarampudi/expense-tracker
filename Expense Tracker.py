@@ -1,5 +1,6 @@
 import csv
 import os
+import datetime
 
 FILE="expenses.csv"
 
@@ -17,12 +18,15 @@ def add_expense():
     amount=input("Enter amount: ")
     category=input("Enter category (Food/Travel/Shopping etc): ")
     description=input("Enter description: ")
+    date=datetime.date.today()
     
     with open(FILE,"a",newline="") as f:
         writer=csv.writer(f)
-        writer.writerow([amount,category,description])
+        writer.writerow([amount,category,description,date])
 
         print("Expense addded successfully!")
+
+
 
 def view_expenses():
     if not os.path.exists(FILE):
@@ -32,7 +36,7 @@ def view_expenses():
         reader= csv.reader(f)
         print("\n--- All Expenses ---")
         for row in reader:
-            print(f"Amount: {row[0]} | Category: {row[1]} | Description: {row[2]}")
+            print(f"Amount: {row[0]} | Category: {row[1]} | Description: {row[2]} | Date: {row[3]}")
 
 def view_total():
     if not os.path.exists(FILE):
@@ -66,6 +70,7 @@ def delete_expense():
         writer.writerows(rows)
     
     print("Expense deleted successfully!")
+    
 
 
 while True:
